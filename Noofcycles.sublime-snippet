@@ -1,0 +1,20 @@
+<snippet>
+	<content><![CDATA[
+vll cyc;
+ll cyclenumber=0ll;
+bool dfs(ll s, ll p){
+    vis[s]=1;
+    for (auto i: adj[s]) {
+        cyc.pb(i);
+        if (!vis[i]) {if (dfs(i,s)) return 1;}
+        else if (i!=p){cyclenumber++;return 1;}
+        cyc.pop_back();
+    }
+    return 0;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>cylcesingraph</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

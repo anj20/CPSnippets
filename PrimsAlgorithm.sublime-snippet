@@ -1,0 +1,32 @@
+<snippet>
+	<content><![CDATA[
+ll PrimsAlgo(int V,vector<vector<pii>>edges)// weigh,node
+{
+    priority_queue<pii,vector<pii>,greater<pii>>pq;
+    vector<int>vis(V+1,0);
+    pq.insert({0,0}); // 0 based
+    // wt,node
+    ll sum=0;
+    while(!pq.empty())
+    {
+        int node=pq.top().ft;
+        int nodeW=pq.top().sc;
+        pq.pop();
+        if(vis[node])continue;
+        vis[node]=1;
+        sum+=nodeW;
+        for(auto it:edges[node])
+        {
+            int adjN=it.ft;
+            int adjNW=it.sc;
+            if(!vis[adjN])pq.push({adjNW,adjN});
+        }
+    }
+    return sum;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>primsalgo</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

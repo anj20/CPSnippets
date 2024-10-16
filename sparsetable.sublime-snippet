@@ -1,0 +1,62 @@
+<snippet>
+	<content><![CDATA[
+template <class T>
+class sparseTable
+{
+    public:
+    int N;
+    int P;
+    vector<vector<T>> dp;
+    vector<vector<T>> it;
+    
+    
+    void buildSparseTable(vector<T> &arr)
+    {
+        N = arr.size();
+        P = 32 - __builtin_clz(N);
+        dp.resize(P);
+        it.resize(P);
+        dp[0].resize(N);
+        it[0].resize(N);
+        for(int j=0;j<N;j++)
+        {
+            dp[0][j] = arr[j];
+            it[0][j] = j;
+        }
+        for(int i=1; i<P; i++)
+        {
+            dp[i].resize(N - (1<<i) + 1);
+            it[i].resize(N - (1<<i) + 1);
+            for(int j=0; j + (1<<i) <= N; j++)
+            {
+                T left = dp[i-1][j];
+                T right = dp[i-1][j + (1 << (i - 1))];
+                
+                //**Here To change the function as required
+                dp[i][j] = min(left,right);
+ 
+                //Index Table (Min)
+                if(left <= right) 
+                    it[i][j] = it[i-1][j];
+                else
+                    it[i][j] = it[i-1][j + (1<<(i-1))];
+            }
+        }
+    }
+    T query(int l, int r)
+    {
+        int len = r - l + 1;
+        int p = 32 - __builtin_clz(len) - 1;
+        T left = dp[p][l];
+        T right = dp[p][r - (1<<p) + 1];
+ 
+        //**Here to change the function
+        return min(left,right);
+    }
+};
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>sparse</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

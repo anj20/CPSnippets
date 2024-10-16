@@ -1,0 +1,42 @@
+<snippet>
+	<content><![CDATA[
+vll components[N];
+ll numComponents;
+vll component(N);
+stack<ll> S;
+void dfs_1(ll node) 
+{
+  vis[node] = 1;
+  for (auto child:adj[node]) if (!vis[child]) dfs_1(child);
+  S.push(node);
+}
+void dfs_2(ll node) 
+{
+  component[node] = numComponents;
+  components[numComponents].push_back(node);
+  vis[node] = 1;
+  for (auto child:adj_rev[node])if (!vis[child]) dfs_2(child);
+}
+void Kosaraju(int n) 
+{
+  for (int i = 0; i < n; i++)if (!vis[i]) dfs_1(i);
+
+  for (int i = 0; i < n; i++)vis[i] = 0;
+
+  while (!S.empty()) 
+  {
+    int node = S.top();
+    S.pop();
+    if (!vis[node]) 
+    {
+      dfs_2(node);
+      numComponents++;
+    }
+  }
+} 
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>kosaraju</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

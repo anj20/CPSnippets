@@ -1,0 +1,28 @@
+<snippet>
+	<content><![CDATA[
+ll calculateMex(unordered_set<ll> s)
+{
+    ll MEX = 0;
+    while (s.find(MEX) != s.end())MEX++;
+
+    return MEX;
+}
+vll Grundy(N,-1);
+ll findGrundyNum(ll n,vll &pick)
+{
+    Grundy[0] = 0;
+    if (Grundy[n] != -1)return (Grundy[n]);
+    unordered_set<ll> Set;
+    for(auto it:pick)
+    {
+        if(n<it)continue;
+        Set.insert(findGrundyNum(n - it,pick));
+    }
+    return Grundy[n] = calculateMex(Set);;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>grundyNum</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

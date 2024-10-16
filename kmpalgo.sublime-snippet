@@ -1,0 +1,42 @@
+<snippet>
+	<content><![CDATA[
+vll lps(N,0ll);
+void lpsar(string s)
+{
+    ll i=1,prevlps=0ll;
+    while(i<len(s))
+    {
+        if(s[i]==s[prevlps])
+        {
+            prevlps++;
+            lps[i]=prevlps;
+            i++;
+        }
+        else if(prevlps==0)
+        {
+            lps[i]=0;
+            i++;
+        }
+        else prevlps=lps[prevlps-1];
+    }
+} 
+ll kmp(string a,string b) // first string,string to be checked 
+{
+    lpsar(b);
+    int n=a.size();
+    int i=0,j=0;
+    while(i<n)
+    {
+        if(a[i]==b[j])i++,j++;
+        else if(j==0)i++;
+        else j=lps[j-1];
+        if(j==len(b))return i-len(b);
+    }
+    return -1;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>kmp</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

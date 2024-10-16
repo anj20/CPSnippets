@@ -1,0 +1,45 @@
+<snippet>
+	<content><![CDATA[
+vi dijkstra(int V,vector<vector<pii>>adj,int src)
+{
+    priority_queue<pii, vector<pii>, greater<pii>> pq;
+    vector<int> dist(V + 1, 1e9), parent(V + 1);
+    for (int i = 1; i <= V; i++)parent[i] = i;
+    dist[src] = 0;
+    pq.push({0, src});
+    while (!pq.empty())
+    {
+        auto it = pq.top();
+        pq.pop();
+        int node = it.second;
+        int dis = it.first;
+        for (auto it : adj[node])
+        {
+            int adjNode = it.first;
+            int edW = it.second;
+            if (dis + edW < dist[adjNode])
+            {
+                dist[adjNode] = dis + edW;
+                pq.push({dis + edW, adjNode});
+                parent[adjNode] = node;
+            }
+        }
+    }
+    if (dist[V] == 1e9)return {-1};
+    vi path;
+    int node = V;
+    while (parent[node] != node)
+    {
+        path.push_back(node);
+        node = parent[node];
+    }
+    path.push_back(1);
+    reverse(all(path));
+    return path;
+} 
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>dijkstra</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

@@ -1,0 +1,19 @@
+<snippet>
+	<content><![CDATA[
+
+void swap(ll &a, ll &b){a=a^b;b=a^b;a=a^b;}
+ //Seive of Erathanus
+bool sieve[N + 1];void createSieve(){for (ll i = 2; i < N + 1; i++)sieve[i] = true;for (ll i = 2; i * i <= N; i++)if (sieve[i])for (ll j = i * i; j <= N; j += i)sieve[j] = false;}
+ // Factorial
+ll fact[N],invFact[N];void precompute_fact(){fact[0] = 1,invFact[0]=1;for (ll i = 1; i < N; i++)fact[i] = (fact[i - 1] * i) % MOD,invFact[i]=invprime(fact[i],MOD);}
+ // Prime Divisors of a no. 
+vll primeDiv;void addPrimes(ll n){for (ll i = 2; i * i <= n; i++) if (n % i == 0){while (n % i == 0)n /= i;primeDiv.pb(i);}if (n > 1)primeDiv.pb(n);} 
+ // Divisors of a no. 
+vll Div;void addDivisors(ll n) {for (ll i = 1; i * i <= n; i++)if (n % i == 0){Div.pb(i);if (i * i != n)Div.pb(n / i);}}
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>maths</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

@@ -1,0 +1,35 @@
+<snippet>
+	<content><![CDATA[
+vi indegree(N,0);
+bool kahnAlgo(int n, vector<int> &ans)
+{
+    queue<int> q;
+    for (int i = 1; i <= n; i++)
+    {
+        if (indegree[i] == 0)q.push(i);
+	}
+    int count = 0;
+	while (!q.empty())
+    {
+        int curr = q.front();
+        q.pop();
+
+            for (auto a : adj[curr])
+            {
+                indegree[a]--;
+                if (indegree[a] == 0)
+                    q.push(a);
+            }
+            ans.push_back(curr);
+            count++;
+	}
+    // checking for DAG.
+  	if (count != n)return true;
+	return false;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>kahnAlgo</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

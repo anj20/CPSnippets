@@ -1,0 +1,50 @@
+<snippet>
+	<content><![CDATA[
+/**
+ * Short for "binary indexed tree",
+ * this data structure supports point update and range sum
+ * queries like a segment tree.
+
+BIT<ll>biter(n)//n length of the array.
+biter.set(i,x)// to set the index i value to x;
+
+ * */
+template<class T>
+class BIT {
+	private:
+		int size;
+		vector<T> bit;
+		vector<T> arr;
+	public:
+		BIT(int size) : size(size), bit(size + 1), arr(size) { }
+
+		/** Sets the value at index ind to val. */
+		void set(int ind, int val) {
+			add(ind, val - arr[ind]);
+		}
+
+		/** Adds val to the element at index ind. */
+		void add(int ind, int val) {
+			arr[ind] += val;
+			ind++;
+			for (; ind <= size; ind += ind & -ind) {
+				bit[ind] += val;
+			}
+		}
+
+		/** @return The sum of all values in [0, ind]. */
+		T pref_sum(int ind) {
+			ind++;
+			T total = 0;
+			for (; ind > 0; ind -= ind & -ind) {
+				total += bit[ind];
+			}
+			return total;
+		}
+};
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>bittree</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

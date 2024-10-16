@@ -1,0 +1,71 @@
+<snippet>
+	<content><![CDATA[
+int n,height; 
+vi in,out,flattree,depth(N);
+int ancestor[N][32];
+void eulerTour(int root,int parent)
+{
+    flattree.pb(root);
+    in.pb(len(flattree)-1);
+    for(auto child:adj[root])
+    {
+        if(child==parent)continue;
+        eulerTour(child,root);
+    }
+    flattree.pb(root);
+    out.pb(len(flattree)-1);
+} 
+void dfs(int root,int parent,int d)
+{
+    depth[root]=d;
+    ancestor[root][0]=parent;
+    for(auto child:adj[root])
+    {
+        if(child==parent)continue;
+        dfs(child,root,d+1);
+    }
+}
+void binarylift()
+{
+    for(int i=1; i<=31; i++)
+        for(int j=1; j<=n; j++)
+            if(depth[j]>=(1<<i))
+                ancestor[j][i]=ancestor[ancestor[j][i-1]][i-1];
+}
+ 
+int findlca(int a, int b){
+    if(a==b) return a;
+    if(depth[a]>depth[b]) swap(a,b);
+    int k=depth[b]-depth[a];
+    for (int i = 0; i < 32; ++i)
+    {
+        if(k&(1<<i)){
+            b=ancestor[b][i];
+        }
+    }
+    if(a!=b){
+            for (int i = 0; i < 31; ++i)
+                if(depth[a]>=(1<<i) && ancestor[a][i]!=ancestor[b][i])
+                    a=ancestor[a][i], b=ancestor[b][i];
+            a=ancestor[a][0];
+    }
+    return a;
+}
+ 
+int kthancestor(int V, int k)
+{
+    for (int i = 0; i <= 31; i++)
+        if (k & (1 << i))
+        {
+            V = ancestor[V][i];
+            if (V == 0)
+                break;
+        }
+    return V;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>binaryjumping</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
